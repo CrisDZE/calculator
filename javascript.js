@@ -115,10 +115,3 @@ function displayOutput(){
 function displayOutputCalculated(){
     output.textContent = calculated
 }
-
-//Detects when are selected 3 values and use the function operate()
-// and resets the selected array with the calculation
-/*while (selectedValues.length === 3){
-    calculated = operate(selectedValues[0], selectedValues[1], selectedValues[2])
-    selectedValues = [calculated]
-}*/
