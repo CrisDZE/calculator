@@ -4,33 +4,68 @@ const numberButtons = numberPad.getElementsByTagName("button")
 const operatorPad = document.getElementById("operator-pad")
 const operatorButtons = operatorPad.getElementsByTagName("button")
 
+const clear = document.getElementById("clear")
 const output = document.getElementById("output")
 
+let selectedValuesToShow = []
 let selectedValues = []
 let calculated = ""
+
+//Limpia los valores
+clear.addEventListener("click", () => {
+    selectedValuesToShow = []
+    selectedValues = []
+    calculated = ""
+    output.textContent = '0'
+})
 
 //añade los numeros a selected
 for (let i = 0; i < numberButtons.length; i++){
     numberButtons[i].addEventListener("click", () => 
-        {selectedValues.push(parseInt(numberButtons[i].value))
-        displayOutput()}
-    )
+        {
+            
+        selectedValuesToShow.push(numberButtons[i].value)
+        handleNumberButton(numberButtons[i].value)
+        displayOutput()
+        console.log(selectedValues)
+    })
 }
 
 //añade los operadores a selected
 for (let i = 0; i < operatorButtons.length; i++){
+    //cuando se presiona el =
     if(operatorButtons[i].value === "="){
         operatorButtons[i].addEventListener("click", () => {
-            calculated = operate(selectedValues[0], selectedValues[1], selectedValues[2])
+            if (selectedValues.length === 0){
+                return
+            } else if (selectedValues[1] === '/' && selectedValues[2] === 0){
+                output.textContent = "vuelve a intentar dividir entre 0 picha"
+                selectedValuesToShow = []
+                selectedValues = []
+                calculated = ""
+            } else {
+            while(selectedValues.length === 3){
+                calculated = operate(selectedValues[0], selectedValues[1], selectedValues[2])
+                selectedValues = [calculated]
+            }            
             console.log(calculated)
 
             selectedValues = [calculated]
             console.log(selectedValues)
-            displayOutput()
-        })
+            displayOutputCalculated()
+            selectedValuesToShow = [calculated]
+        }})
+    // cuando se presionan otros operadores
     } else {
         operatorButtons[i].addEventListener("click", () => 
-            {selectedValues.push(operatorButtons[i].value)
+            {
+                while(selectedValues.length === 3){
+                    calculated = operate(selectedValues[0], selectedValues[1], selectedValues[2])
+                    selectedValues = [calculated]
+                }
+            selectedValues.push(operatorButtons[i].value)
+            selectedValuesToShow.push(operatorButtons[i].value)
+            console.log(selectedValues)
             displayOutput()}
         )
     }
@@ -60,9 +95,25 @@ function operate (number1, operator, number2) {
     }
 }
 
-//muestra selected en el output
+//maneja el boton de numeros
+function handleNumberButton(value){
+
+    if (typeof selectedValues[selectedValues.length - 1] === 'number'){
+        selectedValues[selectedValues.length - 1] = parseInt(selectedValues[selectedValues.length - 1] + value)
+        console.log("funciona")
+    } else {
+        selectedValues.push(parseInt(value))
+        console.log("no funciona", value)
+    }
+}
+
+//muestra el output
 function displayOutput(){
-    output.textContent = selectedValues.join(' ')
+    output.textContent = selectedValuesToShow.join('')
+}
+
+function displayOutputCalculated(){
+    output.textContent = calculated
 }
 
 //Detects when are selected 3 values and use the function operate()
