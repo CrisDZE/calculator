@@ -1,6 +1,72 @@
+#number-pad{
+  display:flex;
+  grid-column: 1/6;
+  grid-row:4;
+  flex-wrap: wrap;
+  height:100%
+}
+#number-pad button{
+  flex: 0 0 20%;
+}
+#operator-pad button{
+  flex:1
+}
+#operator-pad{
+  grid-column: 1/6;
+  grid-row:3;
+  display:flex;
+}
+#clear{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  grid-column: 1/6;
+  grid-row:2;
+  font-size:5vh;
+}
 .calculator {
-  background-color: lightcoral;
-  height: 50%;
-  width: 50%;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 20% auto auto auto auto;
+  grid-gap: 0;
+  grid-template-rows: minmax(9vh, auto) minmax(5vh, auto) minmax(9vh, auto) minmax(9vh, auto);
+  min-width:50%;
+  margin: 5% 25% 0 25%;
+}
+#output{
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  color:green;
+  background-color: black;
+  grid-column: 1/6;
+  grid-row:1;
+  font-size:9vh;
+  border:solid white 1px;
+}
+body {
   margin: 0 auto;
+  font-family:"Micro 5", sans-serif;
+  background-image: url(https://i.pinimg.com/originals/ae/49/7c/ae497c8599c0d7d6a18fba2003b1cd76.jpg)
+}
+button{
+  font-family:"Micro 5", sans-serif;
+  font-size:9vh;
+}
+h1 {
+  display: flex;
+  justify-content: center;
+  font-size: 10vw;
+  margin: 0;
+  background-color:rgba(0, 130, 179, 0.95);
+  border: solid 2px rgba(0, 130, 179, 1);
+  color:white;
+}
+button:hover{
+  background-color: blue;
+  color: white;
+}
+button:hover{
+  background-color: blue;
+  color: white;
 }
